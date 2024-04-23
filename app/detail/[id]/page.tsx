@@ -13,20 +13,21 @@ interface Card {
     hp: number;
     abilities: Array<string>
 }
-export default function DetailID(){
-    //TODO: Bu sayfa tasarımsal olarak düzenlenmeli
+
+export default function DetailID({ params }: { params: { id: string } }){
     //TODO: Kullanıcı isterse bunu save yapıp localstorage'e kaydeder
     //TODO: Kullanıcı daha önce kaydetmişse remove butonu olup isterse remove edebilir
-
+    const id: string = params.id
     const [card, setCard] = useState<Card>()
 
     useEffect(() => {
-        const fetchCardData = async () => {
-            const cardData = await fetchCard()
-            setCard(cardData.data);
+        const fetchCard = async () => {
+            const res = await fetch(`https://api.pokemontcg.io/v2/cards/${params.id}`);
+            const data = await res.json();
+            setCard(data.data)
         };
 
-        fetchCardData();
+        fetchCard();
     }, []);
 
     useEffect(() => {
@@ -56,6 +57,7 @@ export default function DetailID(){
                     </div>
                 </div>
                 {/*Name section*/}
+                <div>name: {card?.name}</div>
                 <PokemonDetailItem
                     label="Name"
                     data={card?.name}
@@ -74,11 +76,21 @@ export default function DetailID(){
                     isMultiple={true}
                 />
                 {/*Abilities Section*/}
-                {card?.abilities && <PokemonDetailItem
-                    label="Abilities"
-                    data={card?.abilities}
-                    isMultiple={true}
-                />}
+                {/*Card Type*/}
+                {/*TODO: componentleştirme sırasında burasının bir dizi içerisinde geldiği anlaşıldığı için değiştirilmeli*/}
+                <div className='flex flex-col items-center gap-2'>
+                    <div className='font-bold'>
+                        <p>Abilities</p>
+                    </div>
+                    {
+                        card?.abilities?.map(item => (
+                            <div className='px-8 py-2 rounded-full shadow-2xl bg-white font-bold'>
+                                <p>{item.name}</p>
+                            </div>
+                        ))
+                    }
+                </div>
+
             </div>
         </>
     )
