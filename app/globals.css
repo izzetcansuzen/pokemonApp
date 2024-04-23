@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.card-container{
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    @apply p-2 relative grid place-items-center gap-y-8
+}

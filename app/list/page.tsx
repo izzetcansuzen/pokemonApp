@@ -37,8 +37,12 @@ export default function List(){
         <div className='max-w-[1440px] mx-auto my-0 bg-red-500'>
             <h1 className='text-center text-2xl font-bold p-4'>Select Your Pokemon!</h1>
             {/*pokemon list container*/}
-            <div className='p-2 relative'>
+            <div className='card-container'>
                 {/*Pokemon Card Container*/}
+                <CardItem />
+                <CardItem />
+                <CardItem />
+                <CardItem />
                 <CardItem />
             </div>
             {/*Pokemonların listelenip kontrol edildiği alan*/}
