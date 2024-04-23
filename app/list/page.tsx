@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import CardItem from "@/components/CardItem";
 import {fetchCards} from "@/utils/api";
 
@@ -27,6 +27,31 @@ export default function List(){
 
         fetchCardsData();
     }, []);
+
+        /*Bu alan içerisinde sonra ki süreçler;
+        *  page isimli bir state aç
+        *  kullanıcı 95% scroll gerçekleştirdiğinde page isimli bir state'i güncelle
+        *  başka bir state daha aç ve ona visible ismi ver
+        *  visible state'e güncel kartların olduğu state'den slice işlemi yaparak güncellenmesini sağla
+        * */
+        useEffect(() => {
+            const handleScroll = () => {
+                const scrollHeight = document.documentElement.scrollHeight;
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const clientHeight = document.documentElement.clientHeight;
+
+                const scrollPercentage = (scrollTop / (scrollHeight - clientHeight)) * 100;
+                if (scrollPercentage >= 95) {
+                    console.log('You have scrolled 95% of the page.');
+                }
+            };
+
+            window.addEventListener('scroll', handleScroll);
+
+            return () => {
+                window.removeEventListener('scroll', handleScroll);
+            };
+        }, []);
 
     return (
         <div className='max-w-[1440px] mx-auto my-0 bg-red-500'>
