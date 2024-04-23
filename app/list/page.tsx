@@ -1,6 +1,8 @@
 "use client"
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Image from "next/image";
+import CardItem from "@/components/CardItem";
 interface Card {
     id: string;
     name: string;
@@ -10,6 +12,7 @@ interface Card {
 }
 export default function List(){
     //TODO: Pokemonları listele
+    //TODO: Pokemon listeleme tasarımlarını oluştur
     //TODO: Kart resmi ve ismi yeterli olur
     //TODO: sayfa başına 10 scroll olucak
     //TODO: scroll yapıldığında devamı yüklenecek (sınırsız scroll)
@@ -31,14 +34,19 @@ export default function List(){
     }, []);
 
     return (
-        <>
-            <div>List Pokemons!</div>
+        <div className='max-w-[1440px] mx-auto my-0 bg-red-500'>
+            <h1 className='text-center text-2xl font-bold p-4'>Select Your Pokemon!</h1>
+            {/*pokemon list container*/}
+            <div className='p-2 relative'>
+                {/*Pokemon Card Container*/}
+                <CardItem />
+            </div>
             {/*Pokemonların listelenip kontrol edildiği alan*/}
             {cards.map(item => {
                 return (
                     <div>{item.name} + {item.images.small} + {item.id}</div>
                 )
             })}
-        </>
+        </div>
     )
 }
