@@ -2,6 +2,7 @@
 import {useEffect, useState} from "react";
 import {fetchCard, fetchCards} from "@/utils/api";
 import Image from "next/image";
+import PokemonDetailItem from "@/components/PokemonDetail/PokemonDetailItem";
 interface Card {
     id: string;
     name: string;
@@ -10,7 +11,7 @@ interface Card {
     };
     types: Array<string>;
     hp: number;
-    abilities: Array<any>
+    abilities: Array<string>
 }
 export default function DetailID(){
     //TODO: Bu sayfa tasarımsal olarak düzenlenmeli
@@ -55,52 +56,29 @@ export default function DetailID(){
                     </div>
                 </div>
                 {/*Name section*/}
-                <div className='flex flex-col items-center gap-2'>
-                    <div className='font-bold'>
-                        <p>Name:</p>
-                    </div>
-                    <div className='px-8 py-2 rounded-full shadow-2xl bg-white font-bold'>
-                        <p>{card?.name}</p>
-                    </div>
-                </div>
+                <PokemonDetailItem
+                    label="Name"
+                    data={card?.name}
+                    isMultiple={false}
+                />
+                {/*HP Section*/}
+                <PokemonDetailItem
+                    label="HP"
+                    data={card?.hp}
+                    isMultiple={false}
+                />
                 {/*Card Type*/}
-                <div className='flex flex-col items-center gap-2'>
-                    <div className='font-bold'>
-                        <p>Types:</p>
-                    </div>
-                    {card?.types?.map(item => {
-                        /*TODO: birden fazla değer gelirse kontrol et*/
-                        return (
-                            <div className='px-8 py-2 rounded-full shadow-2xl bg-white font-bold'>
-                                <p>{item}</p>
-                            </div>
-                        )
-                    })}
-                </div>
-                <div className='flex flex-col items-center gap-2'>
-                    <div className='font-bold'>
-                        <p>HP:</p>
-                    </div>
-                    <div className='px-8 py-2 rounded-full shadow-2xl bg-white font-bold'>
-                        <p>{card?.hp}</p>
-                    </div>
-                </div>
-                {/*Burada abilities tüm pokemonlarda yok onu kontrol ediyoruz*/}
-                {card?.abilities && <div className='flex flex-col items-center gap-2'>
-                    <div className='font-bold'>
-                        <p>Abilities:</p>
-                    </div>
-                    <div className='px-8 py-2 rounded-full shadow-2xl bg-white font-bold'>
-                        {card?.abilities?.map(item => {
-                            /*TODO: birden fazla değer gelirse kontrol et*/
-                            return (
-                                <div className='px-8 py-2 rounded-full shadow-2xl bg-white font-bold'>
-                                    <p>{item}</p>
-                                </div>
-                            )
-                        })}
-                    </div>
-                </div>}
+                <PokemonDetailItem
+                    label="Card Type"
+                    data={card?.types}
+                    isMultiple={true}
+                />
+                {/*Abilities Section*/}
+                {card?.abilities && <PokemonDetailItem
+                    label="Abilities"
+                    data={card?.abilities}
+                    isMultiple={true}
+                />}
             </div>
         </>
     )
