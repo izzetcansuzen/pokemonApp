@@ -15,6 +15,9 @@ interface Card {
 }
 
 export default function DetailID({ params }: { params: { id: string } }){
+    /*TODO: Loading ekranı ekle*/
+    /*TODO: Birden fazla gelen kutucuklar için tasarım düzenlemesi yap*/
+
     const id: string = params.id
     const [card, setCard] = useState<Card>()
     const [savedCards, setsavedCards] = useState<string[]>([]);

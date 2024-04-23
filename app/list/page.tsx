@@ -11,13 +11,10 @@ interface Card {
     };
 }
 export default function List(){
-    //TODO: sayfa başına 10 scroll olucak
-    //TODO: scroll yapıldığında devamı yüklenecek (sınırsız scroll)
-
     /*States*/
     const [cards, setCards] = useState<Card[]>([]);
 
-    /*TODO: İstekten değerler geç geliyor kontrol et*/
+    /*TODO: Loading ekranı ekle*/
     //Pokemon datalarını alıp state içerisine ekliyoruz
     useEffect(() => {
         const fetchCardsData = async () => {
@@ -28,7 +25,7 @@ export default function List(){
         fetchCardsData();
     }, []);
 
-        /*Bu alan içerisinde sonra ki süreçler;
+        /*TODO: Bu alan içerisinde sonra ki süreçler;
         *  page isimli bir state aç
         *  kullanıcı 95% scroll gerçekleştirdiğinde page isimli bir state'i güncelle
         *  başka bir state daha aç ve ona visible ismi ver
