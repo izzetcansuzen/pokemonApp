@@ -1,8 +1,8 @@
 "use client"
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import Image from "next/image";
 import CardItem from "@/components/CardItem";
+import {fetchCards} from "@/utils/api";
+
 interface Card {
     id: string;
     name: string;
@@ -20,13 +20,12 @@ export default function List(){
     /*TODO: İstekten değerler geç geliyor kontrol et*/
     //Pokemon datalarını alıp state içerisine ekliyoruz
     useEffect(() => {
-        const fetchCards = async () => {
-            const res = await fetch('https://api.pokemontcg.io/v2/cards');
-            const data = await res.json();
-            setCards(data.data);
+        const fetchCardsData = async () => {
+            const cardsData = await fetchCards()
+            setCards(cardsData);
         };
 
-        fetchCards();
+        fetchCardsData();
     }, []);
 
     return (
