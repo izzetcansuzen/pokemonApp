@@ -18,6 +18,7 @@ export default function DetailID({ params }: { params: { id: string } }){
     //TODO: Kullanıcı isterse bunu save yapıp localstorage'e kaydeder
     //TODO: Kullanıcı daha önce kaydetmişse remove butonu olup isterse remove edebilir
     const id: string = params.id
+
     const [card, setCard] = useState<Card>()
     const [savedCards, setsavedCards] = useState<string[]>([]);
     const [isSaved, setIsSaved] = useState<boolean>(false);
@@ -31,7 +32,6 @@ export default function DetailID({ params }: { params: { id: string } }){
 
         fetchCard();
     }, []);
-
 
     useEffect(() => {
         const savedPokemonIds = localStorage.getItem("savedCards");
