@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 interface CardItemProps {
     id: string;
     name: string;
@@ -6,7 +7,7 @@ interface CardItemProps {
 }
 export default function CardItem ({name, image, id}: CardItemProps){
     return (
-        <>
+        <Link href={`/detail/${id}`}>
             <div className="w-[150px] h-[auto] bg-white rounded-md shadow-2xl relative cursor-pointer">
                 {/*Pokemon card image*/}
                 <div className='w-full h-[220px] relative rounded-md'>
@@ -23,6 +24,6 @@ export default function CardItem ({name, image, id}: CardItemProps){
                     <p>{name}</p>
                 </div>
             </div>
-        </>
+        </Link>
     )
 }
