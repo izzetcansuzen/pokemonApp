@@ -15,6 +15,7 @@ export default function List(){
     const [cards, setCards] = useState<Card[]>([]);
 
     /*TODO: Loading ekranı ekle*/
+
     //Pokemon datalarını alıp state içerisine ekliyoruz
     useEffect(() => {
         const fetchCardsData = async () => {
