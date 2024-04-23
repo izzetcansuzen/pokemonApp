@@ -1,9 +1,44 @@
+"use client"
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+interface Card {
+    id: string;
+    name: string;
+    images: {
+        small: string
+    };
+}
 export default function List(){
     //TODO: Pokemonları listele
     //TODO: Kart resmi ve ismi yeterli olur
     //TODO: sayfa başına 10 scroll olucak
     //TODO: scroll yapıldığında devamı yüklenecek (sınırsız scroll)
+
+    /*States*/
+    const [cards, setCards] = useState<Card[]>([]);
+
+    /*TODO: İstekten değerler geç geliyor kontrol et*/
+    //Pokemon datalarını alıp state içerisine ekliyoruz
+    useEffect(() => {
+        const fetchCards = async () => {
+            const res = await fetch('https://api.pokemontcg.io/v2/cards');
+            const data = await res.json();
+            setCards(data.data);
+            console.log(cards)
+        };
+
+        fetchCards();
+    }, []);
+
     return (
-        <div>List Pokemons!</div>
+        <>
+            <div>List Pokemons!</div>
+            {/*Pokemonların listelenip kontrol edildiği alan*/}
+            {cards.map(item => {
+                return (
+                    <div>{item.name} + {item.images.small} + {item.id}</div>
+                )
+            })}
+        </>
     )
 }
