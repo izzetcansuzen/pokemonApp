@@ -15,22 +15,18 @@ interface Card {
 }
 
 export default function DetailID({ params }: { params: { id: string } }){
-    //TODO: Kullanıcı isterse bunu save yapıp localstorage'e kaydeder
-    //TODO: Kullanıcı daha önce kaydetmişse remove butonu olup isterse remove edebilir
     const id: string = params.id
-
     const [card, setCard] = useState<Card>()
     const [savedCards, setsavedCards] = useState<string[]>([]);
     const [isSaved, setIsSaved] = useState<boolean>(false);
 
     useEffect(() => {
-        const fetchCard = async () => {
-            const res = await fetch(`https://api.pokemontcg.io/v2/cards/${params.id}`);
-            const data = await res.json();
-            setCard(data.data)
+        const fetchCardDetail = async () => {
+            const cardDetail = await fetchCard(id)
+            setCard(cardDetail);
         };
 
-        fetchCard();
+        fetchCardDetail();
     }, []);
 
     useEffect(() => {
