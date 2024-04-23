@@ -19,6 +19,8 @@ export default function DetailID({ params }: { params: { id: string } }){
     //TODO: Kullanıcı daha önce kaydetmişse remove butonu olup isterse remove edebilir
     const id: string = params.id
     const [card, setCard] = useState<Card>()
+    const [savedCards, setsavedCards] = useState<string[]>([]);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchCard = async () => {
@@ -30,9 +32,33 @@ export default function DetailID({ params }: { params: { id: string } }){
         fetchCard();
     }, []);
 
+
     useEffect(() => {
-        console.log(card)
-    }, [card]);
+        const savedPokemonIds = localStorage.getItem("savedCards");
+        if (savedPokemonIds) {
+            setsavedCards(JSON.parse(savedPokemonIds));
+        }
+    }, []);
+
+    const handleSaveCard = () => {
+        if (!savedCards.includes(id)) {
+            const updatedPokemons = [...savedCards, id];
+            localStorage.setItem("savedCards", JSON.stringify(updatedPokemons));
+            setsavedCards(updatedPokemons);
+            setIsSaved(true);
+        }
+    };
+
+    const handleDeleteCard = () => {
+        const updatedPokemons = savedCards.filter(pokemonId => pokemonId !== id);
+        localStorage.setItem("savedCards", JSON.stringify(updatedPokemons));
+        setsavedCards(updatedPokemons);
+        setIsSaved(false);
+    };
+
+    useEffect(() => {
+        setIsSaved(savedCards.includes(id));
+    }, [savedCards]);
 
     return (
         <>
@@ -47,14 +73,16 @@ export default function DetailID({ params }: { params: { id: string } }){
                         className='absolute'
                     />
                 </div>
-                <div className='flex fixed bottom-0 w-full'>
-                    {/*Kontrol eklenmeli*/}
-                    <div className='w-full'>
-                        <button className='w-full px-8 py-2 bg-red-500 text-white font-bold'>Delete Pokemon!</button>
-                    </div>
-                    <div className='w-full'>
-                        <button className='w-full px-8 py-2 bg-green-500 text-white font-bold'>Save Pokemon!</button>
-                    </div>
+                {/* Buttons */}
+                <div className="flex fixed bottom-0 w-full">
+                    {isSaved ? (
+                        <button className="w-full px-8 py-2 bg-red-500 text-white font-bold" onClick={handleDeleteCard}>
+                            Delete Pokemon!
+                        </button>
+                    ) : ""}
+                    <button className="w-full px-8 py-2 bg-green-500 text-white font-bold" onClick={handleSaveCard}>
+                        Save Pokemon!
+                    </button>
                 </div>
                 {/*Name section*/}
                 <div>name: {card?.name}</div>
