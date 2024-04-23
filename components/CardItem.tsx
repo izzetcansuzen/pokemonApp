@@ -1,13 +1,17 @@
 import Image from "next/image";
-
-export default function CardItem(){
+interface CardItemProps {
+    id: string;
+    name: string;
+    image: string;
+}
+export default function CardItem ({name, image, id}: CardItemProps){
     return (
-        <div>
-            <div className="w-[150px] h-[auto] bg-white rounded-md shadow-2xl relative">
+        <>
+            <div className="w-[150px] h-[auto] bg-white rounded-md shadow-2xl relative cursor-pointer">
                 {/*Pokemon card image*/}
-                <div className='w-full h-[150px] relative rounded-md'>
+                <div className='w-full h-[220px] relative rounded-md'>
                     <Image
-                        src="/profile_image.jpeg"
+                        src={image}
                         alt="image"
                         fill={true}
                         objectFit="cover"
@@ -16,9 +20,9 @@ export default function CardItem(){
                 </div>
                 {/*Pokemon card name*/}
                 <div className='w-full h-auto bg-white p-2 text-black text-center font-bold rounded-md'>
-                    <p>Kurosaki Ichigo</p>
+                    <p>{name}</p>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

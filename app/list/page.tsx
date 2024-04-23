@@ -11,9 +11,6 @@ interface Card {
     };
 }
 export default function List(){
-    //TODO: Pokemonları listele
-    //TODO: Pokemon listeleme tasarımlarını oluştur
-    //TODO: Kart resmi ve ismi yeterli olur
     //TODO: sayfa başına 10 scroll olucak
     //TODO: scroll yapıldığında devamı yüklenecek (sınırsız scroll)
 
@@ -27,7 +24,6 @@ export default function List(){
             const res = await fetch('https://api.pokemontcg.io/v2/cards');
             const data = await res.json();
             setCards(data.data);
-            console.log(cards)
         };
 
         fetchCards();
@@ -36,21 +32,20 @@ export default function List(){
     return (
         <div className='max-w-[1440px] mx-auto my-0 bg-red-500'>
             <h1 className='text-center text-2xl font-bold p-4'>Select Your Pokemon!</h1>
-            {/*pokemon list container*/}
+            {/*Pokemon list container*/}
             <div className='card-container'>
                 {/*Pokemon Card Container*/}
-                <CardItem />
-                <CardItem />
-                <CardItem />
-                <CardItem />
-                <CardItem />
+                {cards.map(item => {
+                    return (
+                        <CardItem
+                            key={item.id}
+                            name={item.name}
+                            image={item.images.small}
+                            id={item.id}
+                        />
+                    )
+                })}
             </div>
-            {/*Pokemonların listelenip kontrol edildiği alan*/}
-            {cards.map(item => {
-                return (
-                    <div>{item.name} + {item.images.small} + {item.id}</div>
-                )
-            })}
         </div>
     )
 }
